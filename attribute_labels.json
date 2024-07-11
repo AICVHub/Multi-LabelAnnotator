@@ -1,0 +1,9 @@
+{
+    "标签1": ["cls1", "cls2"],
+    "标签2": ["cls1", "cls2", "cls3", "cls4"],
+    "标签3": ["cls1", "cls2", "cls3", "cls4", "cls5", "cls6", "cls7", "cls8"],
+    "标签4": ["cls1", "cls2", "cls3", "cls4", "cls5", "cls6", "cls7", "cls8"],
+    "标签5": ["cls1", "cls2", "cls3", "cls4", "cls5", "cls6", "cls7", "cls8", "cls9", "cls10", "cls11"],
+    "标签6": ["cls1", "cls2", "cls3", "cls4", "cls5", "cls6", "cls7", "cls8", "cls9", "cls10", "cls11"],
+    "标签7": ["cls1", "cls2", "cls3", "cls4", "cls5", "cls6", "cls7", "cls8", "cls9", "cls10", "cls11"]
+}
