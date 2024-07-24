@@ -9,6 +9,11 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QLabel, QSty
     QComboBox, QShortcut
 
 
+def json_load(json_file):
+    with open(json_file, 'rb') as f:
+        return json.load(f)
+
+
 class ClsAnnotator(QMainWindow):
 
     def __init__(self):
@@ -105,7 +110,9 @@ class ClsAnnotator(QMainWindow):
         folder_path = QFileDialog.getExistingDirectory(self, "Select Directory")
         if folder_path:
             QMessageBox.information(self, 'Folder Selected', f"You selected: {folder_path}")
-            self.img_path_list = [os.path.join(folder_path, img_name) for img_name in os.listdir(folder_path)]
+            self.img_path_list = [os.path.join(folder_path, img_name) for img_name in os.listdir(folder_path)
+                                  if img_name.lower().endswith((".jpg", ".png", ".jpeg", ".bmp", ".tif", ".tiff"))
+                                  ]
             self.show_image()
 
     def set_save_path(self):
@@ -298,6 +305,18 @@ class ClsAnnotator(QMainWindow):
             self.setWindowTitle("{}: [{}/{}]{}".format(
                 self.base_title, self.img_idx + 1, len(self.img_path_list), os.path.split(img_path)[-1])
             )
+
+            # 读取标注信息，并更新当前的复选框状态
+            if self.save_path:
+                img_filename = os.path.split(img_path)[-1]
+                anno_path = os.path.join(self.save_path, os.path.splitext(img_filename)[0] + ".json")
+                if os.path.isfile(anno_path):
+                    json_dict = json_load(anno_path)
+                    for attribute in self.comboBoxes:
+                        if attribute in json_dict:
+                            label = json_dict[attribute]
+                            index = self.comboBoxes[attribute].findText(label)
+                            self.comboBoxes[attribute].setCurrentIndex(index)
         else:
             self.imageLabel.clear()  # 如果没有图片路径，清空图片显示区域
 
@@ -367,3 +386,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
